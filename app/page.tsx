@@ -5,7 +5,12 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export default function Home() {
-  const [stats, setStats] = useState({ books: 0, readers: 0, genres: 0 });
+  // FIX: Explicitly type the state so TypeScript knows it can be either a number or a string
+  const [stats, setStats] = useState<{
+    books: number | string;
+    readers: number | string;
+    genres: number | string;
+  }>({ books: 0, readers: 0, genres: 0 });
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -16,8 +21,12 @@ export default function Home() {
           animateValue("books", data.books);
           animateValue("readers", data.readers);
           animateValue("genres", data.genres);
+        } else {
+           // If response is not ok, trigger the fallback
+           setStats({books: '100+', readers: '500+', genres: '20+'}); 
         }
       } catch (error) {
+        // Now TypeScript will accept strings here!
         setStats({books: '100+', readers: '500+', genres: '20+'}); 
       }
     };
@@ -39,6 +48,7 @@ export default function Home() {
     window.requestAnimationFrame(step);
   };
 
+  // ... (The rest of your JSX remains exactly the same)
   return (
     <>
       <Header />
