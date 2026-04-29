@@ -1,26 +1,80 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&family=Lora:ital,wght@0,400;0,500;1,400&family=Cinzel:wght@400;600&display=swap');
+
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-chocolate: #5c3d2e;
+  --color-mahogany: #8b5e3c;
+  --color-amber: #c4843c;
+  --color-gold: #d4a853;
+  --color-parchment: #f5ecd7;
+  --color-cream: #fdf8f0;
+  --color-warm-white: #fefcf8;
+  --color-ink: #2a1a10;
+  --color-muted: #7a6050;
+  --color-border: rgba(92, 61, 46, 0.15);
+
+  --font-serif: "Playfair Display", Georgia, serif;
+  --font-sans: "Lora", Tahoma, Geneva, Verdana, sans-serif;
+  --font-cinzel: "Cinzel", serif;
+
+  --shadow-warm: 0 8px 40px rgba(92, 61, 46, 0.18);
+  --shadow-card: 0 4px 24px rgba(92, 61, 46, 0.12);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  body {
+    @apply bg-cream text-ink font-sans flex flex-col min-h-screen overflow-x-hidden;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Noise Texture Overlay */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1000;
+  opacity: 0.6;
 }
+
+/* Hero Background Glow */
+.hero-glow::after {
+  content: "";
+  position: absolute;
+  right: -10%;
+  top: -20%;
+  width: 70%;
+  height: 140%;
+  background: radial-gradient(ellipse at 60% 40%, rgba(196, 132, 60, 0.12) 0%, rgba(139, 94, 60, 0.08) 40%, transparent 70%);
+  pointer-events: none;
+}
+
+/* Line connector for "How it works" steps */
+.steps-grid::before {
+  content: "";
+  position: absolute;
+  top: 44px;
+  left: calc(16.6% + 30px);
+  right: calc(16.6% + 30px);
+  height: 1px;
+  background: repeating-linear-gradient(90deg, var(--color-border) 0, var(--color-border) 8px, transparent 8px, transparent 16px);
+}
+@media (max-width: 900px) {
+  .steps-grid::before { display: none; }
+}
+
+/* Animations */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes floatY {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.animate-fadeUp { animation: fadeUp 0.8s forwards; opacity: 0; }
+.animate-float { animation: floatY 3s ease-in-out infinite; }
+.animate-float-delayed { animation: floatY 3.5s 1s ease-in-out infinite; }
