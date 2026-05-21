@@ -44,7 +44,7 @@ export default function History() {
   const loadHistory = async (currentToken: string) => {
     setLoading(true);
     try {
-      const response = await fetch("https://booknest-backend-fastapi-1.onrender.com/booklog/history/all", {
+      const response = await fetch("https://booknest-backend-fastapi.vercel.app/booklog/history/all", {
         headers: { Authorization: `Bearer ${currentToken}` }
       });
       
@@ -65,7 +65,7 @@ export default function History() {
   const updateRequestStatus = async (id: number, status: string) => {
     if (!token) return;
     try {
-      const response = await fetch(`https://booknest-backend-fastapi-1.onrender.com/booklog/request/${id}?upd=${status}`, {
+      const response = await fetch(`https://booknest-backend-fastapi.vercel.app/booklog/request/${id}?upd=${status}`, {
         method: "PUT",
         headers: { Authorization: `Bearer ${token}` }
       });

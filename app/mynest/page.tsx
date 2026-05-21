@@ -48,7 +48,7 @@ export default function MyNest() {
 
   const loadProfile = async (currentToken: string) => {
     try {
-      const response = await fetch("https://booknest-backend-fastapi-1.onrender.com/user/", {
+      const response = await fetch("https://booknest-backend-fastapi.vercel.app/user/", {
         headers: { Authorization: `Bearer ${currentToken}` }
       });
       if (response.ok) {
@@ -62,12 +62,12 @@ export default function MyNest() {
   const loadBookshelfAndStats = async (currentToken: string) => {
     try {
       // 1. Fetch Books
-      const booksRes = await fetch("https://booknest-backend-fastapi-1.onrender.com/book/", { headers: { Authorization: `Bearer ${currentToken}` } });
+      const booksRes = await fetch("https://booknest-backend-fastapi.vercel.app/book/", { headers: { Authorization: `Bearer ${currentToken}` } });
       const myBooks: Book[] = booksRes.ok ? await booksRes.json() : [];
       setBooks(myBooks);
 
       // 2. Fetch Active Logs
-      const logsRes = await fetch("https://booknest-backend-fastapi-1.onrender.com/booklog/", { headers: { Authorization: `Bearer ${currentToken}` } });
+      const logsRes = await fetch("https://booknest-backend-fastapi.vercel.app/booklog/", { headers: { Authorization: `Bearer ${currentToken}` } });
       const activeLogs: BookLog[] = logsRes.ok ? await logsRes.json() : [];
       const activeIds = activeLogs.map(log => log.book_id || log.id);
       setActiveBookIds(activeIds);
@@ -77,7 +77,7 @@ export default function MyNest() {
       let completedCount = 0;
       
       try {
-        const historyRes = await fetch("https://booknest-backend-fastapi-1.onrender.com/booklog/history/all", { headers: { Authorization: `Bearer ${currentToken}` } });
+        const historyRes = await fetch("https://booknest-backend-fastapi.vercel.app/booklog/history/all", { headers: { Authorization: `Bearer ${currentToken}` } });
         if (historyRes.ok) {
           const historyData = await historyRes.json();
           // Verify it's an array before counting
@@ -110,7 +110,7 @@ export default function MyNest() {
   const handleListInMarketplace = async (bookId: number) => {
     if (!token) return;
     try {
-      const response = await fetch(`https://booknest-backend-fastapi-1.onrender.com/booklog/${bookId}`, {
+      const response = await fetch(`https://booknest-backend-fastapi.vercel.app/booklog/${bookId}`, {
         method: "POST", headers: { Authorization: `Bearer ${token}` },
       });
       if (response.ok) {
@@ -123,7 +123,7 @@ export default function MyNest() {
   const handleDeleteBook = async () => {
     if (!token || !deleteConfirmId) return;
     try {
-      const response = await fetch(`https://booknest-backend-fastapi-1.onrender.com/book/${deleteConfirmId}`, {
+      const response = await fetch(`https://booknest-backend-fastapi.vercel.app/book/${deleteConfirmId}`, {
         method: "DELETE", headers: { Authorization: `Bearer ${token}` },
       });
       if (response.ok) {
@@ -138,7 +138,7 @@ export default function MyNest() {
     e.preventDefault();
     if (!token) return;
     try {
-      const response = await fetch("https://booknest-backend-fastapi-1.onrender.com/book/", {
+      const response = await fetch("https://booknest-backend-fastapi.vercel.app/book/", {
         method: "POST",
         headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
         body: JSON.stringify({ name: newBook.title, author: newBook.author, genre: newBook.genre }),
@@ -156,7 +156,7 @@ export default function MyNest() {
     e.preventDefault();
     if (!token) return;
     try {
-      const response = await fetch("https://booknest-backend-fastapi-1.onrender.com/user/", {
+      const response = await fetch("https://booknest-backend-fastapi.vercel.app/user/", {
         method: "PUT",
         headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
         body: JSON.stringify({ name: editProfile.name, phone_no: editProfile.phone, address: editProfile.address }),

@@ -35,7 +35,7 @@ export default function Marketplace() {
   const loadBooks = async (currentToken: string, query: string, genre: string) => {
     setLoading(true);
     try {
-      let url = new URL("https://booknest-backend-fastapi-1.onrender.com/booklog");
+      let url = new URL("https://booknest-backend-fastapi.vercel.app/booklog");
       if (query) url.searchParams.append("q", query);
       if (genre !== "All") url.searchParams.append("genre", genre);
 
@@ -63,7 +63,7 @@ export default function Marketplace() {
     setMyBooks([]); 
 
     try {
-      const response = await fetch("https://booknest-backend-fastapi-1.onrender.com/book/", { headers: { Authorization: `Bearer ${token}` } });
+      const response = await fetch("https://booknest-backend-fastapi.vercel.app/book/", { headers: { Authorization: `Bearer ${token}` } });
       if (response.ok) {
         const data = await response.json();
         setMyBooks(Array.isArray(data) ? data : []);
@@ -74,7 +74,7 @@ export default function Marketplace() {
   const confirmSwap = async () => {
     if (!selectedOffer) { setSwapError("Please select a book to offer."); return; }
     try {
-      const response = await fetch(`https://booknest-backend-fastapi-1.onrender.com/booklog/request?offered_book=${selectedOffer}&wanted_book=${wantedBook?.id}`, {
+      const response = await fetch(`https://booknest-backend-fastapi.vercel.app/booklog/request?offered_book=${selectedOffer}&wanted_book=${wantedBook?.id}`, {
         method: "POST", headers: { Authorization: `Bearer ${token}` }
       });
       if (response.ok) {

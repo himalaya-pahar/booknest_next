@@ -25,7 +25,7 @@ export default function Wishlist() {
   const loadWishlistBooks = async (currentToken: string) => {
     setLoading(true);
     try {
-      const response = await fetch("https://booknest-backend-fastapi-1.onrender.com/wishlist/", { headers: { Authorization: `Bearer ${currentToken}` } });
+      const response = await fetch("https://booknest-backend-fastapi.vercel.app/wishlist/", { headers: { Authorization: `Bearer ${currentToken}` } });
       if (response.ok) {
         const data = await response.json();
         setBooks(Array.isArray(data) ? data : []);
@@ -38,7 +38,7 @@ export default function Wishlist() {
     e.preventDefault();
     if (!token) return;
     try {
-      const response = await fetch("https://booknest-backend-fastapi-1.onrender.com/wishlist/", {
+      const response = await fetch("https://booknest-backend-fastapi.vercel.app/wishlist/", {
         method: "POST", headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
         body: JSON.stringify(newBook)
       });

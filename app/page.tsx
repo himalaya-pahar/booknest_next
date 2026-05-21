@@ -15,7 +15,7 @@ export default function Home() {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const response = await fetch("https://booknest-backend-fastapi-1.onrender.com/api/booknest-stats");
+        const response = await fetch("https://booknest-backend-fastapi.vercel.app/api/booknest-stats");
         if (response.ok) {
           const data = await response.json();
           animateValue("books", data.books);
